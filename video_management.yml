@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /mnt/dockers/overseerr:/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped
+  medusa:
+      image: lscr.io/linuxserver/medusa:latest
+      container_name: medusa
+      environment:
+        - PUID=1000
+        - PGID=1000
+        - TZ=Etc/UTC
+      volumes:
+        - /mnt/dockers/medusa:/config
+        - /mnt/DATA/Downloads:/downloads
+        - /mnt/DATA/Series_TV:/serie_tv
+        - /mnt/DATA/Series_TV_Dessins_Animes:/serie_tv_da
+      ports:
+        - 8081:8081
+      restart: unless-stopped
+networks: {}
