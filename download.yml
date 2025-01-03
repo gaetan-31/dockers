@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  transmission-openvpn:
+    container_name: transmission
+    user: 0:0
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - /mnt/dockers/transmission/dockers:/dockers
+      - /mnt/DATA/Downloads:/downloads
+      - /mnt/dockers/transmission/config:/config
+    environment:
+      - OPENVPN_PROVIDER=WINDSCRIBE
+      - OPENVPN_CONFIG=Bucharest-NoVampires-tcp
+      - OPENVPN_USERNAME=brianbrita_8hyad
+      - OPENVPN_PASSWORD=ch729evbpa
+      - LOCAL_NETWORK=192.168.0.0/24
+      - TRANSMISSION_DOWNLOAD_DIR=/downloads
+	  - TRANSMISSION_INCOMPLETE_DIR=/downloads
+      - TRANSMISSION_RPC_USERNAME=admin
+      - TRANSMISSION_RPC_PASSWORD=KFemD7RqpU^N7D*U*rot
+      - TRANSMISSION_RPC_AUTHENTICATION_REQUIRED=true
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+    ports:
+      - 9091:9091
+    image: haugene/transmission-openvpn
+    restart: on-failure
+  jdownloader-2:
+    image: jlesage/jdownloader-2
+    ports:
+      - 5800:5800
+    volumes:
+      - /mnt/dockers/jodwnloader-2/config:/config
+      - /mnt/DATA/Downloads:/output
+networks: {}
